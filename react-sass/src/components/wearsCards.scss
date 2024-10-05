@@ -1,0 +1,24 @@
+.cards {
+  width: 360px;
+  height: 720px;
+  padding: 30px;
+  margin: 20px auto;
+  box-shadow: 1px 1px 5px 0 rgba($color: black, $alpha: 0.5);
+  animation: fadeo 0.5s ease-out;
+}
+.cards img {
+  border-radius: 20px;
+  height: 640px;
+  width: inherit;
+  object-fit: contain;
+  border-bottom: 3px solid black;
+  margin-bottom: 10px;
+}
+.card-info {
+  text-align: left;
+}
+.card-info p {
+  font-size: 24px;
+  font-weight: 700;
+  color: black;
+}

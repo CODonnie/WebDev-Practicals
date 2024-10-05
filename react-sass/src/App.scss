@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: white;
+  font-family: SUSE;
+  color: darkblue;
+}
+@keyframes move {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-70px);
+	}
+}
+@keyframes moveback {
+	0% {
+		transform: translateX(-70px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+@keyframes lmove {
+	0% {
+		transform: translateX(-100px);
+	}
+	100% {
+		transform: translateX(-70px);
+	}
+}
+
+@keyframes fade {
+	0% {
+		opacity: 0;
+	}
+	55% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeo {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

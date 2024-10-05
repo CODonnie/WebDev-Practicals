@@ -1,0 +1,52 @@
+.home-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 20px;
+}
+.home {
+  text-align: center;
+}
+.filter {
+  width: 300px;
+  margin: 0px 45%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.filter button {
+  padding: 7px 20px;
+  font-size: 20px;
+  margin-right: 20px;
+  font-weight: 500;
+  border-radius: 10px;
+}
+.filter ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 22px;
+  animation: lmove 0.5s ease forwards, fade 1s ease forwards;
+}
+.filter ul li {
+  list-style: none;
+  color: black;
+  font-weight: 500;
+  font-size: 18px;
+  hr {
+    border: 2px solid black;
+    margin-top: 5px;
+  }
+}
+.active {
+  animation: move 0.5s ease-in-out forwards;
+  background-color: black;
+  color: yellow;
+}
+.inactive {
+  animation: moveback 0.5s ease forwards;
+  background-color: yellow;
+  color: black;
+}
+.home-cards .hmc {
+  animation: fadeo 1s ease;
+}
