@@ -1,0 +1,31 @@
+.cart {
+  padding: 30px;
+  .column {
+    display: flex;
+    justify-content: start;
+    gap: 50px;
+    margin-left: 250px;
+    border-bottom: 1px solid;
+    p {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+  }
+}
+.carted-item {
+  display: flex;
+  justify-content: start;
+  gap: 90px;
+  align-items: center;
+  margin-bottom: 25px;
+  border-bottom: 1px solid;
+  img {
+    border-radius: 20px;
+    height: 160px;
+    width: inherit;
+    object-fit: contain;
+    margin-left: 70px;
+    margin-bottom: 10px;
+  }
+}
