@@ -1,0 +1,19 @@
+$pale-green: #ced8d0;
+$dark-green: #001600ff;
+$gold: #d4b500;
+$gold-gradient: linear-gradient(150deg, #d98300, #d4b500);
+$green-gradient: linear-gradient(150deg, #112e2f, #006e44);
+$shadow: rgba(0, 0, 0, 0.4);
+
+$type-weight: (
+  "light": 300,
+  "regular": 400,
+  "medium": 500,
+  "semi-bold": 600,
+  "bold": 700,
+  "extra-bold": 800,
+);
+
+@function weight($weight-name) {
+  @return map-get($type-weight, $weight-name);
+}

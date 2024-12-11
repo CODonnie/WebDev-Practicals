@@ -1,0 +1,13 @@
+//	.list, .product-grid, .title, .header-product, .image
+
+.list {
+	width: 100px;
+	.header{
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+	}
+	.header-product {
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+	}
+}

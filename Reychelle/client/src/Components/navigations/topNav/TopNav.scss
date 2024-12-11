@@ -1,0 +1,79 @@
+@use '../../../styles/Vars' as *;
+.top-navigation {
+  width: 100vw;
+  height: auto;
+  padding-top: 5px;
+	position: relative;
+  display: grid;
+  gap: 19.5px;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-areas:
+    "	logo	logo	logo	logo	logo	logo"
+    "	logo	logo	logo	logo	logo	logo"
+    "	logo	logo	logo	logo	logo	logo"
+    "	search	search	search	search	search	search"
+    "	navs	navs	navs	navs	navs	navs"
+    "	navs	navs	navs	navs	navs	navs";
+}
+.top-navigation .background {
+	width: inherit;
+	height: 300px;
+	position: absolute;
+}
+.logo {
+  grid-area: logo;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo img {
+	height: 100px;
+	z-index: 1;
+}
+
+.search-box {
+  grid-area: search;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.search-box input {
+  width: 45%;
+  padding: 10px;
+  border: 1px solid $gold;
+  border-radius: 7px;
+  outline: none;
+  background-color: black;
+	color: $pale-green;
+}
+.search-box .search-icon {
+  color: $pale-green;
+  position: absolute;
+  right: 290px;
+}
+
+.navs {
+  grid-area: navs;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(3px);
+}
+.navs .nav-left ul {
+  display: flex;
+  gap: 30px;
+	font-weight: weight(light);
+  list-style: none;
+  color: white;
+}
+.navs .nav-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 30px;
+  color: white;
+}

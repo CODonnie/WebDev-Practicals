@@ -1,0 +1,17 @@
+.app {
+	height: 100vh;
+}
+.nav-pages {
+	width: 100vw;
+	display: flex;
+}
+.routes-footer {
+	width: 80vw;
+	height: 95vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.routes {
+	padding: 40px 40px 0px 40px;
+}
