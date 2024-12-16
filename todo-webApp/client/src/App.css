@@ -1,0 +1,19 @@
+.app {
+	width: 100vw;
+	height: 100vh;
+	display: grid;
+	grid-template-areas: 
+	"head	head	head	head	head	head"
+	"body	body	body	body	body	body"
+	"foot	foot	foot	foot	foot	foot";
+	grid-template-rows: auto 1fr auto;
+}
+.head {
+	grid-area: head;
+}
+.body {
+	grid-area: body;
+}
+.foot {
+	grid-area: foot;
+}
