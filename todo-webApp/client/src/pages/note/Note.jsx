@@ -1,5 +1,5 @@
-//eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
+import './Note.scss'
 import { toast } from "react-toastify";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -24,11 +24,20 @@ const Note = ({ url }) => {
 
       if (response.data.success) {
         toast.success("Note created");
+				setData({
+					title: "",
+					textarea: "",
+				})
       } else {
         toast.error("an error occured");
       }
     } catch (error) {
+			toast.error("kapachimeremerechipaku!")
       console.log(error);
+			setData({
+				title: "error brah",
+				textarea: "ewo ni werey t'onshe"
+			})
     }
   };
 
@@ -42,6 +51,8 @@ const Note = ({ url }) => {
           value={data.title}
           placeholder="Enter Title"
         />
+      </div>
+      <div className="textarea">
         <textarea
           onChange={handleData}
           name="textarea"
@@ -58,5 +69,5 @@ const Note = ({ url }) => {
 export default Note;
 
 Note.propTypes = {
-	url: PropTypes.string
-}
+  url: PropTypes.string,
+};

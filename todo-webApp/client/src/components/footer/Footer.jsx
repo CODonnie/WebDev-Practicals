@@ -14,7 +14,7 @@ const Footer = () => {
 		}
       </div>
       {show ? (
-        <div className="show">
+        <div className="show" onClick={() => setShow(!show)}>
           <Link className="link" to="/todo">TODO</Link>
           <Link className="link" to="/note">NOTE</Link>
         </div>
