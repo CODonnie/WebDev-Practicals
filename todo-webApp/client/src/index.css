@@ -28,3 +28,16 @@ p {
   background: #080808;
   color: #fff;
 }
+.btnStyles {
+  width: 20%;
+  padding: 10px;
+  background-color: darkred;
+  cursor: pointer;
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+}

@@ -5,16 +5,14 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Todo from "./pages/todo/Todo";
 import Note from "./pages/note/Note";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-
-	const url = "http://localhost:5175";
+  const url = "http://localhost:5175";
   return (
     <div className="app">
-		<ToastContainer />
+      <ToastContainer />
       <div className="head">
         <Header />
       </div>

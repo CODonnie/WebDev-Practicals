@@ -8,6 +8,7 @@ const Note = ({ url }) => {
   const [data, setData] = useState({
     title: "",
     textarea: "",
+		createdOn: "",
   });
 
   const handleData = (e) => {
@@ -18,9 +19,21 @@ const Note = ({ url }) => {
   };
 
   const handleSubmit = async (e) => {
+		const date = new Date(Date.now());
+		const now = date.toLocaleDateString('en-US', {
+			year: "numeric",
+			month: "short",
+			day: "numeric",
+			hour: "2-digit",
+			minute: "2-digit"
+		});
+		setData((currData) => ({
+			...currData,
+			createdOn: now
+		}))
     e.preventDefault();
     try {
-      const response = await axios.post(`${url}/api/note`, data);
+      const response = await axios.post(`${url}/api/data/note`, data);
 
       if (response.data.success) {
         toast.success("Note created");
@@ -61,7 +74,7 @@ const Note = ({ url }) => {
           placeholder="Enter Note"
         />
       </div>
-      <button onClick={handleSubmit}>Save</button>
+      <button className="btnStyles" onClick={handleSubmit}>Save</button>
     </div>
   );
 };

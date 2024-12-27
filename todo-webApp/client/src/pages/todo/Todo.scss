@@ -20,18 +20,12 @@
         border: 2px solid #fff;
         display: inline-block;
       }
+
       input {
         display: none;
       }
-
-
-      input:checked + .checkmark {
-        background-color: darkred;
-      }
-			input:checked + .input input {
-				text-decoration: line-through;
-			}
     }
+
     .input {
       width: auto;
 
