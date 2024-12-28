@@ -32,7 +32,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-
       z-index: 1;
       p {
         font-weight: 500;
@@ -92,5 +91,6 @@
     gap: 5px;
     position: absolute;
     top: 65%;
+		z-index: 1;
   }
 }

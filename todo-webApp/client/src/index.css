@@ -41,3 +41,62 @@ p {
   bottom: 0px;
   right: 10px;
 }
+@keyframes noteSlideIn {
+	0% {
+		opacity: 1;
+		transform: translate(0,0);
+	}
+	90% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		transform: translate(-35px, 40px);
+		display: none;
+	}
+}
+@keyframes noteSlideOut {
+	0% {
+		opacity: 0;
+		transform: translate(-35px, 40px);
+		display: none;
+	}
+	90% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+		transform: translate(0,0);
+		display: block;
+	}
+}
+
+@keyframes todoSlideIn {
+	0% {
+		opacity: 1;
+		transform: translate(0,0);
+	}
+	90% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		transform: translate(35px, 40px);
+		display: none;
+	}
+}
+@keyframes todoSlideOut {
+	0% {
+		opacity: 0;
+		transform: translate(35px, 40px);
+		display: none;
+	}
+	90% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+		transform: translate(0,0);
+		display: block;
+	}
+}
