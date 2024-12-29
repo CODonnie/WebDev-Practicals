@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import "./Footer.scss";
 import { FaPlus, FaMinus, FaCheck, FaBookOpen, FaHome } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { DataContext } from '../../context/DataContext';
 
 const Footer = () => {
-  const [show, setShow] = useState(false);
-  const [filter, setFilter] = useState();
-  const [selected, setSelected] = useState("home");
+	const { show, setShow, filter, setFilter, selected, setSelected } = useContext(DataContext);
+
   return (
     <div className="footer">
       <div className={show ? "ani-note-icon" : "note-icon"}>
@@ -34,7 +34,7 @@ const Footer = () => {
 
       <div className="footer-container">
         <div className="home">
-          <Link style={{ color: "#fff" }} to="/home">
+          <Link style={{ color: "#fff" }} to="/">
             <FaHome size={30} onClick={() => {
 							setFilter("home");
 							setSelected("home");

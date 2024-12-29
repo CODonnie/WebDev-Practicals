@@ -12,8 +12,12 @@ const Todo = ({ url }) => {
     todos: [],
     completed: [],
     createdOn: "",
+    type: "todo",
   });
   const [hide, setHide] = useState(false);
+
+  const isTyping =
+    data.title.trim() || data.todos.length || data.completed.length;
 
   const handleTitleChanges = (value) => {
     setData((currData) => ({ ...currData, title: value }));
@@ -35,12 +39,13 @@ const Todo = ({ url }) => {
   };
   const handleTodoDataMove = (index) => {
     const task = data.todos.find((_, i) => i === index);
+		if (task.trim() !== ""){
     setData((currData) => ({
       ...currData,
       completed: [...currData.completed, task],
       todos: currData.todos.filter((_, i) => i !== index),
     }));
-  };
+  }};
   const handleCompletedDataMove = (index) => {
     const task = data.completed.find((_, i) => i === index);
     setData((currData) => ({
@@ -80,7 +85,7 @@ const Todo = ({ url }) => {
         toast.error("error saving to-do");
       }
     } catch (error) {
-			toast.error("chikamandu");
+      toast.error("chikamandu");
       console.log(error);
     }
   };
@@ -163,9 +168,11 @@ const Todo = ({ url }) => {
       ) : (
         <></>
       )}
-      <button className="btnStyles" onClick={handleDataSubmit}>
-        Save
-      </button>
+      {isTyping ? (
+        <button className="btnStyles" onClick={handleDataSubmit}>
+          Save
+        </button>
+      ) : null}
     </div>
   );
 };

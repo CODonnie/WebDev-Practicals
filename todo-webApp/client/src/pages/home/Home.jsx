@@ -1,10 +1,13 @@
-//eslint-disable-next-line no-unused-vars
-import React from 'react';
+import React, {useContext} from 'react';
+import { DataContext } from '../../context/DataContext'
 
 const Home = () => {
+
+	const {data} = useContext(DataContext);
+
     return (
         <div>
-            <h1>Home Component</h1>
+            <h1>{data}</h1>
         </div>
     );
 };
