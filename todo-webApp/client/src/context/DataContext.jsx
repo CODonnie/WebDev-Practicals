@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { createContext, useState } from "react";
+import { testData } from '../assets/data.js';
 
 const DataContext = createContext();
 
@@ -11,6 +12,7 @@ const DataContextProvider = ({ children }) => {
   const [selected, setSelected] = useState("home");
 
   const dataValue = {
+		testData,
     show,
 		setShow,
 		filter,

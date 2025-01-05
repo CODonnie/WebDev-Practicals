@@ -1,0 +1,42 @@
+//cards, note-card, todo-card, todos
+
+.wrapper {
+	height: 68vh;
+	margin-top: 2vh;
+	
+	}
+.cards {
+	overflow: scroll;
+	height: 68vh;
+}
+.grid-cards {
+	padding: 5px;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	grid-auto-rows: auto;
+	gap: 10px;
+
+	.card {
+		border: 1px solid gray;
+		padding: 10px;
+		border-radius: 5px;
+	}
+}
+.list-cards {
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	overflow: scroll;
+	
+	.card {
+		padding: 10px;
+		height: minmax(70px, 120px);
+		border: 1px solid gray;
+		border-radius: 5px;
+
+		.todo {
+			display: flex;
+		}
+	}
+}

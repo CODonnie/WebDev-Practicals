@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./Note.scss";
 import { toast } from "react-toastify";
 import axios from "axios";
 import PropTypes from "prop-types";
 
 const Note = ({ url }) => {
-  const [data, setData] = useState({
-    title: "",
-    textarea: "",
+
+	const location = useLocation();
+
+	const { title, textarea } = location.state || {}
+
+	const [data, setData] = useState({
+    title: title || "",
+    textarea: textarea || "",
     createdOn: "",
     type: "note",
   });

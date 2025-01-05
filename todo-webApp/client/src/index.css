@@ -7,9 +7,9 @@ body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   background-color: #080808;
+	color: white;
 }
 p {
-  color: #fff;
   font-family: Geneva;
   font-size: 10px;
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./Todo.scss";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { TiArrowSortedDown } from "react-icons/ti";
@@ -7,10 +8,14 @@ import { toast } from "react-toastify";
 import PropTypes from "prop-types";
 
 const Todo = ({ url }) => {
+
+	const location = useLocation();
+	const { title, todos, completed } = location.state || {};
+
   const [data, setData] = useState({
-    title: "",
-    todos: [],
-    completed: [],
+    title: title || "",
+    todos: todos || [],
+    completed: completed || [],
     createdOn: "",
     type: "todo",
   });
