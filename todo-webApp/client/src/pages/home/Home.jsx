@@ -5,7 +5,7 @@ import { MdGridView, MdViewList } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const { testData } = useContext(DataContext);
+  const { filterredData, setFilter } = useContext(DataContext);
   const [grid, setGrid] = useState(true);
   const navigate = useNavigate();
 
@@ -30,14 +30,17 @@ const Home = () => {
 
       <div className="cards">
         <div className={grid ? "grid-cards" : "list-cards"}>
-          {testData ? (
-            testData.map((data) => {
+          {filterredData ? (
+            filterredData.map((data) => {
               if (data.type === "note") {
                 return (
                   <div
                     key={data._id}
                     className="note-card card"
-                    onClick={() => editEntry(data)}
+                    onClick={() => {
+											editEntry(data);
+											setFilter(null);
+										}}
                   >
                     <h4>{data.title}</h4>
                     <p>{data.textarea}</p>
@@ -50,7 +53,10 @@ const Home = () => {
                   <div
                     key={data._id}
                     className="todo-card card"
-                    onClick={() => editEntry(data)}
+                    onClick={() => {
+											editEntry(data);
+											setFilter(null);
+										}}
                   >
                     <h4>{data.title}</h4>
                     {data.todo.map((todo, i) => (
