@@ -1,0 +1,34 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "backend for todo app",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server",
+    "server": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CODonnie/WebDev-Practicals.git#main"
+  },
+  "author": "Ordu Donnie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CODonnie/WebDev-Practicals/issues"
+  },
+  "homepage": "https://github.com/CODonnie/WebDev-Practicals/tree/main#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.17.0",
+    "express": "^4.21.2",
+    "g": "^2.0.1",
+    "mongoose": "^8.9.3",
+    "nodemon": "^3.1.9"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/nodemon": "^1.19.6"
+  }
+}
