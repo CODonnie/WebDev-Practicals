@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-  const url = "http://localhost:5175";
+  const url = "http://localhost:5170";
   return (
     <div className="app">
       <ToastContainer />
@@ -19,7 +19,7 @@ const App = () => {
       <div className="body">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/todo" element={<Todo />} />
+          <Route path="/todo" element={<Todo url={url} />} />
           <Route path="/note" element={<Note url={url} />} />
         </Routes>
       </div>

@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../context/DataContext";
 import "./Home.scss";
 import { MdGridView, MdViewList } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const { filterredData, setFilter } = useContext(DataContext);
+  const { filterredData, setFilter, fetchData } = useContext(DataContext);
   const [grid, setGrid] = useState(true);
   const navigate = useNavigate();
 
@@ -16,10 +16,14 @@ const Home = () => {
       });
     } else {
       navigate("/todo", {
-        state: { title: arg.title, todos: arg.todo, completed: arg.completed },
+        state: { title: arg.title, todos: arg.todos, completed: arg.completed },
       });
     }
   };
+
+	useEffect(() => {
+		fetchData();
+	}, [])
 
   return (
     <div className="wrapper">
@@ -59,7 +63,7 @@ const Home = () => {
 										}}
                   >
                     <h4>{data.title}</h4>
-                    {data.todo.map((todo, i) => (
+                    {data.todos.map((todo, i) => (
                       <div key={i} className="todos">
                         <p>~{todo}</p>
                       </div>

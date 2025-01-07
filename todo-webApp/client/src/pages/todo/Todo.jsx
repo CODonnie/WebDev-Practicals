@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Todo.scss";
+import { DataContext } from "../../context/DataContext";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { TiArrowSortedDown } from "react-icons/ti";
 import axios from "axios";
@@ -10,6 +11,8 @@ import PropTypes from "prop-types";
 const Todo = ({ url }) => {
 
 	const location = useLocation();
+	const navigate = useNavigate();
+	const { setSelected, fetchData } = useContext(DataContext);
 	const { title, todos, completed } = location.state || {};
 
   const [data, setData] = useState({
@@ -76,7 +79,7 @@ const Todo = ({ url }) => {
 
     e.preventDefault();
     try {
-      const response = await axios.post(`${url}/api/data/todo`, data);
+      const response = await axios.post(`${url}/api/data`, data);
       if (response.data.success) {
         toast.success("to-do saved");
         setData((currData) => ({
@@ -86,6 +89,9 @@ const Todo = ({ url }) => {
           completed: [],
           createdOn: "",
         }));
+				setSelected("home");
+				fetchData();
+				navigate(-1);
       } else {
         toast.error("error saving to-do");
       }

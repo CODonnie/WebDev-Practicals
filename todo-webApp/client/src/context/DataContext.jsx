@@ -1,29 +1,55 @@
 import PropTypes from "prop-types";
-import { createContext, useState } from "react";
-import { testData } from "../assets/data.js";
+import { createContext, useEffect, useState } from "react";
+import axios from "axios";
 
 const DataContext = createContext();
 
 const DataContextProvider = ({ children }) => {
   const [show, setShow] = useState(false);
   const [filter, setFilter] = useState();
+  const [dataFilter, setDataFilter] = useState([]);
   const [selected, setSelected] = useState("home");
-  const filterData = () => {
-    if (selected === "home") {
-      return testData;
-    } else {
-      return testData.filter((data) => data.type === selected);
+  const url = "http://localhost:5170";
+
+  const hashString = (str) => {
+    return str.split("").reduce((hash, char) => {
+      return hash + char.charCodeAt(0);
+    }, 0);
+  };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${url}/api/data`);
+      const data = response.data.data;
+      let filteredData = [];
+      if (selected === "home") {
+        filteredData = [...data.todos, ...data.notes].sort((a, b) => {
+          return hashString(a._id) - hashString(b._id);
+        });
+      } else if (selected === "todo") {
+        filteredData = data.todos;
+      } else if (selected === "note") {
+        filteredData = data.notes;
+      }
+
+      setDataFilter(filteredData);
+    } catch (error) {
+      console.log(`omo! wetin sup bayi - ${error.message}`);
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, [selected]);
+
   const dataValue = {
-    filterredData: filterData(),
+    filterredData: dataFilter,
     show,
     setShow,
     filter,
     setFilter,
     selected,
     setSelected,
+    fetchData,
   };
 
   return (

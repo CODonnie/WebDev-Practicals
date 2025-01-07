@@ -1,12 +1,15 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Note.scss";
+import {DataContext} from '../../context/DataContext';
 import { toast } from "react-toastify";
 import axios from "axios";
 import PropTypes from "prop-types";
 
 const Note = ({ url }) => {
 
+	const { setSelected, fetchData } = useContext(DataContext);
+	const navigate = useNavigate();
 	const location = useLocation();
 
 	const { title, textarea } = location.state || {}
@@ -42,7 +45,7 @@ const Note = ({ url }) => {
     }));
     e.preventDefault();
     try {
-      const response = await axios.post(`${url}/api/data/note`, data);
+      const response = await axios.post(`${url}/api/data`, data);
 
       if (response.data.success) {
         toast.success("Note created");
@@ -50,6 +53,9 @@ const Note = ({ url }) => {
           title: "",
           textarea: "",
         });
+				setSelected("home");
+				fetchData();
+				navigate('/');
       } else {
         toast.error("an error occured");
       }
