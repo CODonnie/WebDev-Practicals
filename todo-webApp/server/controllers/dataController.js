@@ -4,39 +4,71 @@ import { Todo, Note } from "../models/dataModels.js";
 const createData = async (req, res) => {
   if (req.body.type === "note") {
     try {
-      const { type, title, textarea, createdOn } = req.body;
+      const { _id, type, title, textarea, createdOn } = req.body;
 
-      const note = await new Note({
-        type: type,
-        title: title,
-        textarea: textarea,
-        createdOn: createdOn,
-      });
-      if (!note) {
-        console.log("error creating note data");
+      if (_id) {
+        let note = await Note.findById({ _id });
+        if (note) {
+          note.type = type;
+          note.title = title;
+          note.textarea = textarea;
+          note.createdOn = createdOn;
+
+          await note.save();
+          res.json({ success: true, message: "note updated" });
+        } else {
+          res.json({ success: false, message: "error updating note" });
+        }
+      } else {
+        const note = await new Note({
+          type: type,
+          title: title,
+          textarea: textarea,
+          createdOn: createdOn,
+        });
+        if (!note) {
+          console.log("error creating note data");
+        }
+        await note.save();
+        res.json({ success: true, message: "note created" });
       }
-      await note.save();
-      res.json({ success: true, message: "note created" });
     } catch (error) {
       res.json({ success: false, message: `${error.message}` });
-      console.log("data(note) not created");
+      console.log(`data(note) not created- ${error.message}`);
     }
   } else {
     try {
-      const { type, title, todos, completed, createdOn } = req.body;
+      const { _id, type, title, todos, completed, createdOn } = req.body;
 
-      const todo = await new Todo({
-        type: type,
-        title: title,
-        todos: todos,
-        completed: completed,
-        createdOn: createdOn,
-      });
-      if (!todo) {
-        console.log("error creating todo data");
+      if (_id) {
+        let todo = await Todo.findById({ _id });
+
+        if (todo) {
+          todo.type = type;
+          todo.title = title;
+          todo.todos = todos;
+          todo.completed = completed;
+          todo.createdOn = createdOn;
+
+          await todo.save();
+          res.json({ success: true, message: "todo updated" });
+        } else {
+          res.json({ success: false, message: "error updating todos" });
+        }
+      } else {
+        const todo = await new Todo({
+          type: type,
+          title: title,
+          todos: todos,
+          completed: completed,
+          createdOn: createdOn,
+        });
+        if (!todo) {
+          console.log("error creating todo data");
+        }
+        await todo.save();
+        res.json({ success: true, message: "todo created" });
       }
-      await todo.save();
-      res.json({ success: true, message: "todo created" });
     } catch (error) {
       res.json({ success: false, message: `${error.message}` });
       console.log("data(todo) not created");
@@ -73,7 +105,7 @@ const deleteData = async (req, res) => {
   const { _id, type } = req.body;
   if (!_id) {
     console.log("invalid id");
-    res.json({ success: false, message: "invalid id bruhh!" });
+    return res.status(400).json({ success: false, message: "invalid id bruhh!" });
   }
 
   try {
