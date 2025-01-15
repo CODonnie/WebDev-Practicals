@@ -46,22 +46,53 @@ const createData = async (req, res) => {
 
 //@desc - get all data.		@route - GET/api/data
 const readData = async (req, res) => {
-	try{
-		const todo = await Todo.find({});
-		const note = await Note.find({});
-		if (!todo || !note){
-			console.log("error retrieving data");
-		}
-		res.status(200).json({
-			success: true, 
-			data: {
-				todos: todo,
-				notes: note
-			}})
-	}catch(error){
-		res.json({success: false, message: `data retrieval failed - ${error.message}`});
-		console.log("retrieval failed")
-	}
-}
+  try {
+    const todo = await Todo.find({});
+    const note = await Note.find({});
+    if (!todo || !note) {
+      console.log("error retrieving data");
+    }
+    res.status(200).json({
+      success: true,
+      data: {
+        todos: todo,
+        notes: note,
+      },
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: `data retrieval failed - ${error.message}`,
+    });
+    console.log("retrieval failed");
+  }
+};
 
-export { createData, readData };
+//@desc - delete data, @route - DELETE/api/data
+const deleteData = async (req, res) => {
+  const { _id, type } = req.body;
+  if (!_id) {
+    console.log("invalid id");
+    res.json({ success: false, message: "invalid id bruhh!" });
+  }
+
+  try {
+    if (type === "note") {
+      await Note.findByIdAndDelete(_id);
+    } else {
+      await Todo.findByIdAndDelete(_id);
+    }
+    res.json({
+      success: true,
+      message: "data deleted",
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: `data not removed - ${error.message}`,
+    });
+    console.log("i no fit delete am");
+  }
+};
+
+export { createData, readData, deleteData };
