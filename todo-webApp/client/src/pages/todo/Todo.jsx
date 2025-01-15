@@ -9,13 +9,13 @@ import { toast } from "react-toastify";
 import PropTypes from "prop-types";
 
 const Todo = ({ url }) => {
-
-	const location = useLocation();
-	const navigate = useNavigate();
-	const { setSelected, fetchData } = useContext(DataContext);
-	const { title, todos, completed } = location.state || {};
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { setSelected, fetchData } = useContext(DataContext);
+  const { _id, title, todos, completed } = location.state || {};
 
   const [data, setData] = useState({
+    _id: _id || null,
     title: title || "",
     todos: todos || [],
     completed: completed || [],
@@ -47,13 +47,14 @@ const Todo = ({ url }) => {
   };
   const handleTodoDataMove = (index) => {
     const task = data.todos.find((_, i) => i === index);
-		if (task.trim() !== ""){
-    setData((currData) => ({
-      ...currData,
-      completed: [...currData.completed, task],
-      todos: currData.todos.filter((_, i) => i !== index),
-    }));
-  }};
+    if (task.trim() !== "") {
+      setData((currData) => ({
+        ...currData,
+        completed: [...currData.completed, task],
+        todos: currData.todos.filter((_, i) => i !== index),
+      }));
+    }
+  };
   const handleCompletedDataMove = (index) => {
     const task = data.completed.find((_, i) => i === index);
     setData((currData) => ({
@@ -89,14 +90,29 @@ const Todo = ({ url }) => {
           completed: [],
           createdOn: "",
         }));
-				setSelected("home");
-				fetchData();
-				navigate(-1);
+        setSelected("home");
+        fetchData();
+        navigate(-1);
       } else {
         toast.error("error saving to-do");
       }
     } catch (error) {
       toast.error("chikamandu");
+      console.log(error);
+    }
+  };
+
+  const handleRemove = async (id, type) => {
+    try {
+      const response = await axios.delete(`${url}/api/data`, {
+        data: { _id: id, type: type },
+      });
+      if (response.data.success) {
+        toast.success("todo list deleted");
+				navigate("/");
+      }
+    } catch (error) {
+      toast.error("error deleting todo list");
       console.log(error);
     }
   };
@@ -110,6 +126,7 @@ const Todo = ({ url }) => {
           value={data.title}
           onChange={(e) => handleTitleChanges(e.target.value)}
         />
+        <p onClick={() => handleRemove(data._id, data.type)}>×</p>
       </div>
       {data.todos.map((todo, index) => {
         return (

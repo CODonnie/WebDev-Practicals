@@ -12,11 +12,11 @@ const Home = () => {
   const editEntry = (arg) => {
     if (arg.type === "note") {
       navigate("/note", {
-        state: { title: arg.title, textarea: arg.textarea },
+				state: { _id: arg._id, title: arg.title, textarea: arg.textarea },
       });
     } else {
       navigate("/todo", {
-        state: { title: arg.title, todos: arg.todos, completed: arg.completed },
+				state: { _id: arg._id, title: arg.title, todos: arg.todos, completed: arg.completed },
       });
     }
   };
