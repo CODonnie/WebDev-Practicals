@@ -3,8 +3,20 @@
 .wrapper {
 	height: 68vh;
 	margin-top: 2vh;
-	
+}
+
+.loading-wrapper {
+	height: 68vh;
+	margin-top: 2vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.loading {
+		animation: loading 1s linear infinite;
 	}
+}
+
 .cards {
 	overflow: scroll;
 	height: 68vh;

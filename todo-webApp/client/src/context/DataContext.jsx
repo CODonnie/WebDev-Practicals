@@ -9,6 +9,7 @@ const DataContextProvider = ({ children }) => {
   const [filter, setFilter] = useState();
   const [dataFilter, setDataFilter] = useState([]);
   const [selected, setSelected] = useState("home");
+  const [loading, setLoading] = useState(true);
   const url = "http://localhost:5170";
 
   const hashString = (str) => {
@@ -32,6 +33,7 @@ const DataContextProvider = ({ children }) => {
       }
 
       setDataFilter(filteredData);
+      setLoading(false);
     } catch (error) {
       console.log(`omo! wetin sup bayi - ${error.message}`);
     }
@@ -50,6 +52,7 @@ const DataContextProvider = ({ children }) => {
     selected,
     setSelected,
     fetchData,
+    loading,
   };
 
   return (
