@@ -49,6 +49,22 @@
         font-weight: 700;
         margin-bottom: 20px;
         font-size: 24px;
+				display: flex;
+				gap: 120px;
+				align-items: center;
+				.back {
+					width: 30px;
+					height: 30px;
+					border-radius: 50%;
+					background-color: darkred;
+					border: 1px solid rgba(225, 225, 225, 0.03);
+					color: black;
+					font-size: 14px;
+					padding: 4px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
       }
 
       form {

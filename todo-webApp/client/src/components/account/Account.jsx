@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import { DataContext } from "../../context/DataContext.jsx";
 import "./Account.scss";
+import {useNavigate} from "react-router-dom";
 
 const Account = () => {
   const { stats, setStats } = useContext(DataContext);
+	const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -38,7 +40,10 @@ const Account = () => {
       <div className="pop-up">
         {stats === "login" ? (
           <div className="form-wrapper">
-            <div className="form-header">LOGIN</div>
+            <div className="form-header">
+					LOGIN
+					<div className="back" onClick={() => navigate(-1)}>X</div>
+					</div>
             <div className="form">
               <form onSubmit={handleDataSubmit}>
                 <div className="email">
@@ -80,7 +85,10 @@ const Account = () => {
           </div>
         ) : (
           <div className="form-wrapper">
-            <div className="form-header">SIGN UP</div>
+            <div className="form-header">
+					SIGN UP
+					<div className="back" onClick={() => navigate(-1)}>X</div>
+					</div>
             <div className="form">
               <form onSubmit={handleDataSubmit}>
                 <div className="afa">
