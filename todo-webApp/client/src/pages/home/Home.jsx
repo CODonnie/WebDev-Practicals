@@ -9,6 +9,7 @@ const Home = () => {
   const { filterredData, setFilter, fetchData, loading } =
     useContext(DataContext);
   const [grid, setGrid] = useState(true);
+	const [refresh, setRefresh] = useState(0);
   const navigate = useNavigate();
 
   const editEntry = (arg) => {
@@ -28,10 +29,19 @@ const Home = () => {
     }
   };
 
+  const refreshData = () => {
+    if (loading) {
+      setTimeout(() => {
+        setRefresh((ref) => ref + 1);
+      }, 500);
+    }
+  };
+
+
   useEffect(() => {
     fetchData();
-  }, []);
-
+    refreshData();
+  }, [refresh]);
 
   if (loading) {
     return (

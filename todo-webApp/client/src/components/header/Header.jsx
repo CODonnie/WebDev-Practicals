@@ -20,8 +20,8 @@ const Header = () => {
           <div className="profile-image">D</div>
         </div>
         <div className="links">
-          <p onClick={() => setAuth(true)}>LOGIN</p>
-          <p onClick={() => setAuth(true)}>SIGN UP</p>
+          <p onClick={() => setAuth(false)}>LOGIN</p>
+          <p onClick={() => setAuth(false)}>SIGN UP</p>
         </div>
       </div>
     </div>
