@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
@@ -7,9 +8,22 @@ import Todo from "./pages/todo/Todo";
 import Note from "./pages/note/Note";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Account from "./components/account/Account";
+import { useContext } from "react";
+import { DataContext } from "./context/DataContext";
 
 const App = () => {
   const url = "http://localhost:5170";
+  const { auth } = useContext(DataContext);
+
+  if (!auth) {
+    return (
+      <div className="account">
+        <Account />
+      </div>
+    );
+  }
+
   return (
     <div className="app">
       <ToastContainer />

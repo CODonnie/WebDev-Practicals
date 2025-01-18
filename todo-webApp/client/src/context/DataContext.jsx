@@ -10,6 +10,8 @@ const DataContextProvider = ({ children }) => {
   const [dataFilter, setDataFilter] = useState([]);
   const [selected, setSelected] = useState("home");
   const [loading, setLoading] = useState(true);
+  const [auth, setAuth] = useState(true);
+  const [stats, setStats] = useState("login");
   const url = "http://localhost:5170";
 
   const hashString = (str) => {
@@ -53,6 +55,10 @@ const DataContextProvider = ({ children }) => {
     setSelected,
     fetchData,
     loading,
+    auth,
+    setAuth,
+    stats,
+    setStats,
   };
 
   return (

@@ -1,3 +1,9 @@
+import bckg from "./todobckg.jpeg";
+
+export const images = {
+	bckg,
+}
+
 export const testData = [
 	{
 		_id: "1",

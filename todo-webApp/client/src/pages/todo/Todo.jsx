@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 const Todo = ({ url }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { setSelected, fetchData } = useContext(DataContext);
+  const { setSelected, fetchData, auth, setAuth } = useContext(DataContext);
   const { _id, title, todos, completed } = location.state || {};
 
   const [data, setData] = useState({
@@ -65,6 +65,9 @@ const Todo = ({ url }) => {
   };
 
   const handleDataSubmit = async (e) => {
+    if (auth) {
+      setAuth(false);
+    }
     const date = new Date(Date.now());
     const now = date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -109,7 +112,7 @@ const Todo = ({ url }) => {
       });
       if (response.data.success) {
         toast.success("todo list deleted");
-				navigate("/");
+        navigate("/");
       }
     } catch (error) {
       toast.error("error deleting todo list");

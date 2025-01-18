@@ -7,7 +7,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 
 const Note = ({ url }) => {
-  const { setSelected, fetchData } = useContext(DataContext);
+  const { setSelected, fetchData, auth, setAuth } = useContext(DataContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -31,6 +31,9 @@ const Note = ({ url }) => {
   };
 
   const handleSubmit = async (e) => {
+		if (auth) {
+			setAuth(false);
+		}
     const date = new Date(Date.now());
     const now = date.toLocaleDateString("en-US", {
       year: "numeric",

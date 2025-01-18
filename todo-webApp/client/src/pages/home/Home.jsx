@@ -32,6 +32,7 @@ const Home = () => {
     fetchData();
   }, []);
 
+
   if (loading) {
     return (
       <div className="loading-wrapper">

@@ -1,8 +1,12 @@
-//eslint-disable-next-line no-unused-vars
-import React from "react";
+ 
+import React, {useContext} from "react";
 import "./Header.scss";
+import { DataContext } from "../../context/DataContext.jsx";
 
 const Header = () => {
+
+	const { setAuth } = useContext(DataContext);
+
   return (
     <div className="header">
       <div className="logo">
@@ -16,8 +20,8 @@ const Header = () => {
           <div className="profile-image">D</div>
         </div>
         <div className="links">
-          <p>LOGIN</p>
-          <p>SIGN UP</p>
+          <p onClick={() => setAuth(true)}>LOGIN</p>
+          <p onClick={() => setAuth(true)}>SIGN UP</p>
         </div>
       </div>
     </div>
