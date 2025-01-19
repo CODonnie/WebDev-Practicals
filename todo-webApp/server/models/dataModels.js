@@ -7,6 +7,11 @@ const todoSchema = new mongoose.Schema({
   todos: Array,
   completed: Array,
   createOn: { type: Date, default: Date.now },
+	user: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true,
+	}
 });
 
 const noteSchema = new mongoose.Schema({
@@ -14,6 +19,11 @@ const noteSchema = new mongoose.Schema({
   title: String,
   textarea: String,
 	createOn: { type: Date, default: Date.now },
+	user: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true,
+	}
 });
 
 const userSchema = new mongoose.Schema(

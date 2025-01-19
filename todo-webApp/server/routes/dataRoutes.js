@@ -7,14 +7,15 @@ import {
 	loginUser,
 	logoutUser,
 } from "../controllers/dataController.js";
+import protect from"../middlewares/authMiddleware.js"
 
 const dataRoutes = express.Router();
 
-dataRoutes.post("/data", createData);
-dataRoutes.get("/data", readData);
-dataRoutes.delete("/data", deleteData);
-dataRoutes.post("/auth/regUser", registerUser);
-dataRoutes.post("/auth/user", loginUser);
+dataRoutes.post("/data", protect, createData);
+dataRoutes.get("/data", protect, readData);
+dataRoutes.delete("/data", protect, deleteData);
+dataRoutes.post("/auth/signup", registerUser);
+dataRoutes.post("/auth/login", loginUser);
 dataRoutes.get("/auth/logout", logoutUser);
 
 export default dataRoutes;

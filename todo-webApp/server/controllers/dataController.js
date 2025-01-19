@@ -3,6 +3,7 @@ import genToken from "../utils/generateToken.js";
 
 //@desc - create new data(note or todo).  @route - POST/api/data
 const createData = async (req, res) => {
+	const userId = req.user.userId;
   if (req.body.type === "note") {
     try {
       const { _id, type, title, textarea, createdOn } = req.body;
@@ -26,6 +27,7 @@ const createData = async (req, res) => {
           title: title,
           textarea: textarea,
           createdOn: createdOn,
+					user: userId,
         });
         if (!note) {
           console.log("error creating note data");
@@ -63,6 +65,7 @@ const createData = async (req, res) => {
           todos: todos,
           completed: completed,
           createdOn: createdOn,
+					user: userId,
         });
         if (!todo) {
           console.log("error creating todo data");
@@ -79,9 +82,10 @@ const createData = async (req, res) => {
 
 //@desc - get all data.		@route - GET/api/data
 const readData = async (req, res) => {
-  try {
-    const todo = await Todo.find({});
-    const note = await Note.find({});
+	const userId = req.user.userId;
+	try {
+		const todo = await Todo.find({ user: userId });
+    const note = await Note.find({ user: userId });
     if (!todo || !note) {
       console.log("error retrieving data");
     }
@@ -103,6 +107,7 @@ const readData = async (req, res) => {
 
 //@desc - delete data, @route - DELETE/api/data
 const deleteData = async (req, res) => {
+	const userId = req.user.userId;
   const { _id, type } = req.body;
   if (!_id) {
     console.log("invalid id");
@@ -113,9 +118,23 @@ const deleteData = async (req, res) => {
 
   try {
     if (type === "note") {
+			const note = await Note.findOne({ _id, user: userId });
+			if(!note){
+				return res.status(404).json({
+					success: false,
+					message: "note not found or doesn't belong to user"
+				})
+			}
       await Note.findByIdAndDelete(_id);
-    } else {
-      await Todo.findByIdAndDelete(_id);
+		} else if(type === "todo") {
+			const todo = await Todo.findOne({ _id, user: userId });
+			if(!todo){
+				return res.status(404).json({
+					success: false,
+					message: "todo not found or doesn't belong to user"
+				})
+			}
+      await Todo.findByIdAndDelete( _id);
     }
     res.json({
       success: true,
@@ -130,7 +149,7 @@ const deleteData = async (req, res) => {
   }
 };
 
-//authentication controller
+//---------------------authentication controller-----------------------
 
 //@desc - create or register new user
 //@route - POST/api/auth/regUser
