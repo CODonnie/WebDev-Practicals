@@ -1,4 +1,5 @@
-import { Todo, Note } from "../models/dataModels.js";
+import { Todo, Note, User } from "../models/dataModels.js";
+import genToken from "../utils/generateToken.js";
 
 //@desc - create new data(note or todo).  @route - POST/api/data
 const createData = async (req, res) => {
@@ -105,7 +106,9 @@ const deleteData = async (req, res) => {
   const { _id, type } = req.body;
   if (!_id) {
     console.log("invalid id");
-    return res.status(400).json({ success: false, message: "invalid id bruhh!" });
+    return res
+      .status(400)
+      .json({ success: false, message: "invalid id bruhh!" });
   }
 
   try {
@@ -127,4 +130,117 @@ const deleteData = async (req, res) => {
   }
 };
 
-export { createData, readData, deleteData };
+//authentication controller
+
+//@desc - create or register new user
+//@route - POST/api/auth/regUser
+//@access - public
+const registerUser = async (req, res) => {
+  const { firstName, lastName, email, username, password } = req.body;
+
+  if (!firstName || !lastName || !email || !username || !password) {
+    console.log("check the input fields for missing/invalid data entry");
+    return res
+      .status(400)
+      .json({ success: false, message: "missing or invalid data in field" });
+  }
+
+  const isExisting = await User.findOne({ email });
+  if (isExisting) {
+    console.log("email already in use");
+    return res
+      .status(401)
+      .json({ success: false, message: "email already exist" });
+  }
+
+  try {
+    const user = await new User({
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      username: username,
+      password: password,
+    });
+
+    if (!user) {
+      console.log("error creating user");
+    }
+
+    await user.save();
+    genToken(res, user._id);
+    res.status(200).json({
+      success: true,
+      message: "user creaated",
+      profile: user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: `error creating user - ${error.message}`,
+    });
+    console.log(`error creating user - ${error.message}`);
+  }
+};
+
+//@desc - login user's account
+//@route - POST/api/auth/user
+
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    console.log("invalid or missing field");
+    return res.status(401).json({
+      success: false,
+      message: "invalid or missing field",
+    });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      console.log("user not found");
+      return res
+        .status(404)
+        .json({ success: false, message: "user not found" });
+    }
+    if (user && await user.comparePassword(password)) {
+		genToken(res, user._id);
+      return res.status(201).json({
+        _id: user._id,
+        name: user.username,
+        email: user.email,
+        success: true,
+        message: `user ${user.username} login successful`,
+      });
+    } else {
+      console.log("incorrect password");
+      return res
+        .status(401)
+        .json({ success: false, message: "incorrect password" });
+    }
+  } catch (error) {
+    console.log(`an error occured - ${error.message}`);
+    return res
+      .status(500)
+      .json({ success: false, message: `server error - ${error.message}` });
+  }
+};
+
+//@desc - logout user's account
+//@route - GET/api/auth/logout
+
+const logoutUser = (req, res) => {
+	res.clearCookie("userCookie", {
+		httpOnly: true,
+		secure: process.env.NODE_ENV !== "development",
+		sameSite: "strict",
+	});
+	return res.status(200).json({
+		success: true,
+		message: "user logged out successful"
+	})
+}
+
+export { createData, readData, deleteData, registerUser, loginUser, logoutUser };

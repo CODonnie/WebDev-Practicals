@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./config/dbConnect.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 import dataRoutes from "./routes/dataRoutes.js";
+import cookieParser from "cookie-parser";
 
 //init
 const app = express();
@@ -15,6 +16,7 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 //routes
 app.use("/api", dataRoutes);
