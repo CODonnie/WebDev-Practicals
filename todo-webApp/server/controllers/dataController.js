@@ -3,7 +3,7 @@ import genToken from "../utils/generateToken.js";
 
 //@desc - create new data(note or todo).  @route - POST/api/data
 const createData = async (req, res) => {
-	const userId = req.user.userId;
+  const userId = req.user.userId;
   if (req.body.type === "note") {
     try {
       const { _id, type, title, textarea, createdOn } = req.body;
@@ -27,7 +27,7 @@ const createData = async (req, res) => {
           title: title,
           textarea: textarea,
           createdOn: createdOn,
-					user: userId,
+          user: userId,
         });
         if (!note) {
           console.log("error creating note data");
@@ -65,7 +65,7 @@ const createData = async (req, res) => {
           todos: todos,
           completed: completed,
           createdOn: createdOn,
-					user: userId,
+          user: userId,
         });
         if (!todo) {
           console.log("error creating todo data");
@@ -82,9 +82,9 @@ const createData = async (req, res) => {
 
 //@desc - get all data.		@route - GET/api/data
 const readData = async (req, res) => {
-	const userId = req.user.userId;
-	try {
-		const todo = await Todo.find({ user: userId });
+  const userId = req.user.userId;
+  try {
+    const todo = await Todo.find({ user: userId });
     const note = await Note.find({ user: userId });
     if (!todo || !note) {
       console.log("error retrieving data");
@@ -107,7 +107,7 @@ const readData = async (req, res) => {
 
 //@desc - delete data, @route - DELETE/api/data
 const deleteData = async (req, res) => {
-	const userId = req.user.userId;
+  const userId = req.user.userId;
   const { _id, type } = req.body;
   if (!_id) {
     console.log("invalid id");
@@ -118,23 +118,23 @@ const deleteData = async (req, res) => {
 
   try {
     if (type === "note") {
-			const note = await Note.findOne({ _id, user: userId });
-			if(!note){
-				return res.status(404).json({
-					success: false,
-					message: "note not found or doesn't belong to user"
-				})
-			}
+      const note = await Note.findOne({ _id, user: userId });
+      if (!note) {
+        return res.status(404).json({
+          success: false,
+          message: "note not found or doesn't belong to user",
+        });
+      }
       await Note.findByIdAndDelete(_id);
-		} else if(type === "todo") {
-			const todo = await Todo.findOne({ _id, user: userId });
-			if(!todo){
-				return res.status(404).json({
-					success: false,
-					message: "todo not found or doesn't belong to user"
-				})
-			}
-      await Todo.findByIdAndDelete( _id);
+    } else if (type === "todo") {
+      const todo = await Todo.findOne({ _id, user: userId });
+      if (!todo) {
+        return res.status(404).json({
+          success: false,
+          message: "todo not found or doesn't belong to user",
+        });
+      }
+      await Todo.findByIdAndDelete(_id);
     }
     res.json({
       success: true,
@@ -224,10 +224,11 @@ const loginUser = async (req, res) => {
         .status(404)
         .json({ success: false, message: "user not found" });
     }
-    if (user && await user.comparePassword(password)) {
-		genToken(res, user._id);
+    if (user && (await user.comparePassword(password))) {
+      const token = genToken(res, user._id);
       return res.status(201).json({
         _id: user._id,
+        token,
         name: user.username,
         email: user.email,
         success: true,
@@ -251,15 +252,22 @@ const loginUser = async (req, res) => {
 //@route - GET/api/auth/logout
 
 const logoutUser = (req, res) => {
-	res.clearCookie("userCookie", {
-		httpOnly: true,
-		secure: process.env.NODE_ENV !== "development",
-		sameSite: "strict",
-	});
-	return res.status(200).json({
-		success: true,
-		message: "user logged out successful"
-	})
-}
+  res.clearCookie("userCookie", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV !== "development",
+    sameSite: "strict",
+  });
+  return res.status(200).json({
+    success: true,
+    message: "user logged out successful",
+  });
+};
 
-export { createData, readData, deleteData, registerUser, loginUser, logoutUser };
+export {
+  createData,
+  readData,
+  deleteData,
+  registerUser,
+  loginUser,
+  logoutUser,
+};

@@ -22,7 +22,9 @@ const DataContextProvider = ({ children }) => {
   };
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${url}/api/data`);
+      const response = await axios.get(`${url}/api/data`, {
+        withCredentials: true,
+      });
       const data = response.data.data;
       let filteredData = [];
       if (selected === "home") {
@@ -60,6 +62,7 @@ const DataContextProvider = ({ children }) => {
     setAuth,
     stats,
     setStats,
+    url,
   };
 
   return (

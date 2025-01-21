@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 const Todo = ({ url }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { setSelected, fetchData, auth, setAuth } = useContext(DataContext);
+  const { setSelected, fetchData } = useContext(DataContext);
   const { _id, title, todos, completed } = location.state || {};
 
   const [data, setData] = useState({
@@ -65,22 +65,6 @@ const Todo = ({ url }) => {
   };
 
   const handleDataSubmit = async (e) => {
-    if (auth) {
-      setAuth(false);
-    }
-    const date = new Date(Date.now());
-    const now = date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    setData((currData) => ({
-      ...currData,
-      createdOn: now,
-    }));
-
     e.preventDefault();
     try {
       const response = await axios.post(`${url}/api/data`, data);

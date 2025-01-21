@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import { DataContext } from "../../context/DataContext.jsx";
 import "./Account.scss";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Account = () => {
-  const { stats, setStats } = useContext(DataContext);
-	const navigate = useNavigate();
+  const { stats, setStats, setAuth, url } = useContext(DataContext);
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -29,7 +31,51 @@ const Account = () => {
     }
   };
 
-  const handleDataSubmit = async () => {};
+  const handleSignupSubmit = async (e) => {
+    e.preventDefault();
+
+    if (signUp.password !== signUp.confirmP) {
+      toast.error("passwords don't match");
+    }
+
+    try {
+      const response = await axios.post(`${url}/api/auth/signup`, {
+        firstName: signUp.firstName,
+        lastName: signUp.lastName,
+        email: signUp.email,
+        username: signUp.username,
+        password: signUp.password,
+      });
+
+      if (response.data.success) {
+        toast.success("User Created");
+        setStats("login");
+      }
+    } catch (error) {
+      toast.error("failed to create account");
+      console.log(`an error occured while creating account - ${error.message}`);
+    }
+  };
+
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(`${url}/api/auth/login`, loginData, {
+        withCredentials: true,
+      });
+      if (response.data.success) {
+        toast.success("Welcome");
+        setAuth(true);
+        navigate("/");
+      } else {
+        toast.error("error login user");
+      }
+    } catch (error) {
+      toast.error("could not log you in at the moment");
+      console.log(`error logging user - ${error.message}`);
+    }
+  };
 
   return (
     <div className="account">
@@ -41,11 +87,13 @@ const Account = () => {
         {stats === "login" ? (
           <div className="form-wrapper">
             <div className="form-header">
-					LOGIN
-					<div className="back" onClick={() => navigate(-1)}>X</div>
-					</div>
+              LOGIN
+              <div className="back" onClick={() => navigate(-1)}>
+                X
+              </div>
+            </div>
             <div className="form">
-              <form onSubmit={handleDataSubmit}>
+              <form onSubmit={handleLoginSubmit}>
                 <div className="email">
                   <input
                     type="email"
@@ -86,11 +134,13 @@ const Account = () => {
         ) : (
           <div className="form-wrapper">
             <div className="form-header">
-					SIGN UP
-					<div className="back" onClick={() => navigate(-1)}>X</div>
-					</div>
+              SIGN UP
+              <div className="back" onClick={() => navigate(-1)}>
+                X
+              </div>
+            </div>
             <div className="form">
-              <form onSubmit={handleDataSubmit}>
+              <form onSubmit={handleSignupSubmit}>
                 <div className="afa">
                   <div className="firstName">
                     <input
@@ -146,13 +196,13 @@ const Account = () => {
                   <input
                     type="password"
                     placeholder="confirm password"
-                    name="confirm"
+                    name="confirmP"
                     value={signUp.confirmP}
                     onChange={handleDataChange}
                   />
                 </div>
                 <div className="agree">
-                  <div></div>{" "}
+                  <div></div>
                   <p>
                     I Agree with <span>privacy</span> and <span>policy</span>
                   </p>

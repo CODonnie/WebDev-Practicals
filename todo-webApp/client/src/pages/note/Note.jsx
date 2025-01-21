@@ -7,7 +7,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 
 const Note = ({ url }) => {
-  const { setSelected, fetchData, auth, setAuth } = useContext(DataContext);
+  const { setSelected, fetchData } = useContext(DataContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -31,24 +31,9 @@ const Note = ({ url }) => {
   };
 
   const handleSubmit = async (e) => {
-		if (auth) {
-			setAuth(false);
-		}
-    const date = new Date(Date.now());
-    const now = date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    setData((currData) => ({
-      ...currData,
-      createdOn: now,
-    }));
     e.preventDefault();
-    try {
-      const response = await axios.post(`${url}/api/data`, data);
+		try {
+			const response = await axios.post(`${url}/api/data`, data, { withCredentials: true });
 
       if (response.data.success) {
         toast.success("Note created");
@@ -65,10 +50,6 @@ const Note = ({ url }) => {
     } catch (error) {
       toast.error("kapachimeremerechipaku!");
       console.log(error);
-      setData({
-        title: "error brah",
-        textarea: "ewo ni werey t'onshe",
-      });
     }
   };
 
