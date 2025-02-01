@@ -3,17 +3,35 @@
   width: 100vw;
   height: 68vh;
   margin-top: 2vh;
-	position: relative;
+  position: relative;
+
+	.title {
+		width: 98vw;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		input {
+			width: 70%;
+		}
+
+		p{
+			font-size: 24px;
+			font-weight: 700;
+			margin-right: 20px;
+		}
+	}
+
   .checkbox-input {
-    padding: 20px;
+    padding: 5px 5px 5px 20px;
     display: flex;
     justify-content: start;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 
     .custom-checkbox {
-      width: 25px;
-      height: 25px;
+      width: 18px;
+      height: 18px;
 
       .checkmark {
         width: 100%;
@@ -35,13 +53,25 @@
         height: 30px;
         background-color: rgba(0, 0, 0, 0);
         color: #fff;
-				border: none;
-				outline: none;
+        border: none;
+        outline: none;
       }
     }
+  }
 
+  .completed {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+    .h2 {
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: start;
+			gap: 7px;
+    }
   }
   .add-todo {
-    padding: 20px 0px 0px 22px;
+    padding: 20px 0px 7px 22px;
   }
 }

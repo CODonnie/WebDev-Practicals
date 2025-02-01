@@ -44,6 +44,7 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
+
   useEffect(() => {
     fetchData();
   }, [selected]);

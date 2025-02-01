@@ -32,8 +32,10 @@ const Note = ({ url }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-		try {
-			const response = await axios.post(`${url}/api/data`, data, { withCredentials: true });
+    try {
+      const response = await axios.post(`${url}/api/data`, data, {
+        withCredentials: true,
+      });
 
       if (response.data.success) {
         toast.success("Note created");
@@ -56,7 +58,9 @@ const Note = ({ url }) => {
   const handleRemove = async (id, type) => {
     try {
       const response = await axios.delete(`${url}/api/data`, {
-				data: { _id: id, type: type },
+        headers: { "Content-Type": "application/json" },
+        data: { _id: id, type: type },
+        withCredentials: true,
       });
       if (response.data.success) {
         toast.success("Note deleted!");
@@ -65,7 +69,7 @@ const Note = ({ url }) => {
         toast.error(`Note not removed`);
       }
     } catch (error) {
-      toast.error(`error removing data ${id}`);
+      toast.error(`error removing data ${error.message}`);
       console.log(error);
     }
   };

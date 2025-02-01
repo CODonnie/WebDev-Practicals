@@ -9,7 +9,7 @@ const Home = () => {
   const { filterredData, setFilter, fetchData, loading } =
     useContext(DataContext);
   const [grid, setGrid] = useState(true);
-	const [refresh, setRefresh] = useState(0);
+  const [refresh, setRefresh] = useState(0);
   const navigate = useNavigate();
 
   const editEntry = (arg) => {
@@ -36,7 +36,6 @@ const Home = () => {
       }, 500);
     }
   };
-
 
   useEffect(() => {
     fetchData();

@@ -67,7 +67,9 @@ const Todo = ({ url }) => {
   const handleDataSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${url}/api/data`, data);
+      const response = await axios.post(`${url}/api/data`, data, {
+        withCredentials: true,
+      });
       if (response.data.success) {
         toast.success("to-do saved");
         setData((currData) => ({
@@ -92,8 +94,11 @@ const Todo = ({ url }) => {
   const handleRemove = async (id, type) => {
     try {
       const response = await axios.delete(`${url}/api/data`, {
+        headers: { "Content-Type": "application/json" },
         data: { _id: id, type: type },
+        withCredentials: true,
       });
+
       if (response.data.success) {
         toast.success("todo list deleted");
         navigate("/");
