@@ -80,7 +80,7 @@ const createData = async (req, res) => {
   }
 };
 
-//@desc - get all data.		@route - GET/api/data
+//@desc - get user data.		@route - GET/api/data
 const readData = async (req, res) => {
   const userId = req.user.userId;
   try {
@@ -105,7 +105,32 @@ const readData = async (req, res) => {
   }
 };
 
-//@desc - delete data, @route - DELETE/api/data
+//@desc - get default data(no user)
+//@route - GET/api/data/default
+const readDefaultData = async (req, res) => {
+  try {
+    const todo = await Todo.find({ user: { $exists: false } });
+    const note = await Note.find({ user: { $exists: false } });
+    if (!todo || !note) {
+      console.log("error retrieving data");
+    }
+    res.status(200).json({
+      success: true,
+      data: {
+        todos: todo,
+        notes: note,
+      },
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: `data retrieval failed - ${error.message}`,
+    });
+    console.log("retrieval failed");
+  }
+};
+
+//@desc - delete data, @route - POST/api/data
 const deleteData = async (req, res) => {
   const userId = req.user.userId;
   const { _id, type } = req.body;
@@ -117,8 +142,8 @@ const deleteData = async (req, res) => {
   }
 
   try {
-    if (type === "note") {
-      const note = await Note.findOne({ _id, user: userId });
+		if (type === "note") {
+			const note = await Note.findOne({ _id, user: userId});
       if (!note) {
         return res.status(404).json({
           success: false,
@@ -266,6 +291,7 @@ const logoutUser = (req, res) => {
 export {
   createData,
   readData,
+	readDefaultData,
   deleteData,
   registerUser,
   loginUser,
