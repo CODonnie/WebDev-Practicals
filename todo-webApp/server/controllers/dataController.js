@@ -1,5 +1,6 @@
 import { Todo, Note, User } from "../models/dataModels.js";
 import genToken from "../utils/generateToken.js";
+import jwt from "jsonwebtoken";
 
 //@desc - create new data(note or todo).  @route - POST/api/data
 const createData = async (req, res) => {
@@ -288,6 +289,21 @@ const logoutUser = (req, res) => {
   });
 };
 
+//@desc - check if user is logged input
+//@route - GET/api/auth/check
+
+const checkUser = (req, res) => {
+	const token = req.cookies.userCookie;
+
+	if(!token) return res.json({ isAuthenticated: false });
+
+	jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+		if(err) return res.json({ isAuthenticated: false });
+
+		res.json({ isAuthenticated: true, user });
+	})
+}
+
 export {
   createData,
   readData,
@@ -296,4 +312,5 @@ export {
   registerUser,
   loginUser,
   logoutUser,
+	checkUser,
 };

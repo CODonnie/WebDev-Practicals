@@ -7,6 +7,7 @@ import {
 	loginUser,
 	logoutUser,
 	readDefaultData,
+	checkUser,
 } from "../controllers/dataController.js";
 import protect from"../middlewares/authMiddleware.js"
 
@@ -19,5 +20,6 @@ dataRoutes.delete("/data", protect, deleteData);
 dataRoutes.post("/auth/signup", registerUser);
 dataRoutes.post("/auth/login", loginUser);
 dataRoutes.get("/auth/logout", protect, logoutUser);
+dataRoutes.get("/auth/check", checkUser);
 
 export default dataRoutes;
