@@ -44,6 +44,25 @@ const DataContextProvider = ({ children }) => {
     }
   };
 
+	const checkAuth = async () => {
+		try {
+			const response = await axios.get(`${url}/api/auth/check`, {
+				withCredentials: true
+			});
+
+			if(response.data.isAuthenticated){
+				setAuth(true);
+			} else {
+				setAuth(false);
+			}
+		} catch (error){
+			console.log(`checking auth failed - ${error.message}`);
+		}
+	}
+
+	useEffect(() => {
+		checkAuth();
+	}, []);
 
   useEffect(() => {
     fetchData();
