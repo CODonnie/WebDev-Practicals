@@ -20,6 +20,7 @@ const Account = () => {
     password: "",
     confirmP: "",
   });
+	const [err, setErr] = useState("");
 
   const handleDataChange = (e) => {
     const name = e.target.name;
@@ -35,7 +36,7 @@ const Account = () => {
     e.preventDefault();
 
     if (signUp.password !== signUp.confirmP) {
-      toast.error("passwords don't match");
+      setErr("passwords don't match");
     }
 
     try {
@@ -52,13 +53,13 @@ const Account = () => {
         setStats("login");
       }
     } catch (error) {
-      toast.error("failed to create account");
-      console.log(`an error occured while creating account - ${error.message}`);
+			setErr(error.response.data.message);
     }
   };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+		setErr("");
 
     try {
       const response = await axios.post(`${url}/api/auth/login`, loginData, {
@@ -68,12 +69,13 @@ const Account = () => {
         toast.success("Welcome");
         setAuth(true);
         navigate("/");
-      } else {
-        toast.error("error login user");
       }
     } catch (error) {
-      toast.error("could not log you in at the moment");
-      console.log(`error logging user - ${error.message}`);
+			if (error.response && error.response.data) {
+            setErr(error.response.data.message);
+        } else {
+            setErr("An unexpected error occurred");
+        }
     }
   };
 
@@ -92,6 +94,7 @@ const Account = () => {
                 X
               </div>
             </div>
+					{err ? <p style={{ color: "white" }}>{err}</p> : null}
             <div className="form">
               <form onSubmit={handleLoginSubmit}>
                 <div className="email">
@@ -125,7 +128,9 @@ const Account = () => {
                 <div className="switch">
                   <p>
                     Dont have an account?{" "}
-                    <span onClick={() => setStats("signup")}>SIGN UP HERE</span>
+                    <span onClick={() => {
+											setErr("");
+											setStats("signup")}}>SIGN UP HERE</span>
                   </p>
                 </div>
               </form>
@@ -139,6 +144,7 @@ const Account = () => {
                 X
               </div>
             </div>
+					{err ? <p style={{ color: "white" }}>{err}</p> : null}
             <div className="form">
               <form onSubmit={handleSignupSubmit}>
                 <div className="afa">
@@ -213,7 +219,9 @@ const Account = () => {
                 <div className="switch">
                   <p>
                     already have an account?
-                    <span onClick={() => setStats("login")}>LOGIN HERE</span>
+                    <span onClick={() => {
+											setErr("");
+											setStats("login")}}>LOGIN HERE</span>
                   </p>
                 </div>
               </form>
