@@ -264,7 +264,7 @@ const loginUser = async (req, res) => {
       console.log("incorrect password");
       return res
         .status(401)
-        .json({ success: false, message: "incorrect password" });
+        .json({ success: false, message: "incorrect email or password" });
     }
   } catch (error) {
     console.log(`an error occured - ${error.message}`);
